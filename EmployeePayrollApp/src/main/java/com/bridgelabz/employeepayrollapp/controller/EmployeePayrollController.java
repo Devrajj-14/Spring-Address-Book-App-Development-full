@@ -2,18 +2,22 @@ package com.bridgelabz.employeepayrollapp.controller;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollapp.model.EmployeePayrollData;
+import com.bridgelabz.employeepayrollapp.service.IEmployeePayrollService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UC3: Employee Payroll REST Controller (Updated with DTO and Model)
- * Accepts EmployeePayrollDTO as request body and returns EmployeePayrollData model.
+ * UC4: Employee Payroll REST Controller (Refactored with Service Layer)
+ * Controller delegates all business logic to IEmployeePayrollService via @Autowired.
  */
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
+
+    @Autowired
+    private IEmployeePayrollService employeePayrollService;
 
     /**
      * GET all employees
@@ -21,10 +25,7 @@ public class EmployeePayrollController {
      */
     @GetMapping("/")
     public List<EmployeePayrollData> getEmployeePayrollData() {
-        // Returning a sample list — actual list storage comes in UC5
-        List<EmployeePayrollData> list = new ArrayList<>();
-        list.add(new EmployeePayrollData(1L, "Sample Employee", 5000.0));
-        return list;
+        return employeePayrollService.getEmployeePayrollData();
     }
 
     /**
@@ -33,30 +34,29 @@ public class EmployeePayrollController {
      */
     @GetMapping("/get/{id}")
     public EmployeePayrollData getEmployeePayrollDataById(@PathVariable long id) {
-        return new EmployeePayrollData(id, "Employee-" + id, 3000.0);
+        return employeePayrollService.getEmployeePayrollDataById(id);
     }
 
     /**
-     * POST create new employee — accepts DTO, returns Model
+     * POST create new employee
      * curl -X POST -H "Content-Type: application/json"
      *      -d '{"name":"Lisa","salary":2000}'
      *      "http://localhost:8080/employeepayrollservice/create" -w "\n"
      */
     @PostMapping("/create")
     public EmployeePayrollData addEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
-        // Create model from DTO (ID will be managed by service in UC5)
-        return new EmployeePayrollData(1L, employeePayrollDTO.name, employeePayrollDTO.salary);
+        return employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
     }
 
     /**
-     * PUT update employee — accepts DTO, returns updated Model
+     * PUT update employee
      * curl -X PUT -H "Content-Type: application/json"
      *      -d '{"name":"Lisa","salary":2000}'
      *      "http://localhost:8080/employeepayrollservice/update" -w "\n"
      */
     @PutMapping("/update")
     public EmployeePayrollData updateEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
-        return new EmployeePayrollData(1L, employeePayrollDTO.name, employeePayrollDTO.salary);
+        return employeePayrollService.updateEmployeePayrollData(employeePayrollDTO);
     }
 
     /**
@@ -65,6 +65,7 @@ public class EmployeePayrollController {
      */
     @DeleteMapping("/delete/{id}")
     public String deleteEmployeePayrollData(@PathVariable long id) {
+        employeePayrollService.deleteEmployeePayrollData(id);
         return "Deleted Employee Payroll Data for ID: " + id;
     }
 }
