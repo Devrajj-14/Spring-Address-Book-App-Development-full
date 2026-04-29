@@ -1,0 +1,105 @@
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.person-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.person-table thead tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.person-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.person-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s ease;
+}
+
+.person-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.person-table td {
+  padding: 9px 12px;
+  color: #333;
+  vertical-align: middle;
+}
+
+.col-name {
+  white-space: nowrap;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+.col-address {
+  min-width: 220px;
+  max-width: 280px;
+}
+
+.col-city {
+  white-space: nowrap;
+  min-width: 70px;
+}
+
+.col-state {
+  white-space: nowrap;
+  min-width: 90px;
+}
+
+.col-zip {
+  white-space: nowrap;
+  min-width: 70px;
+}
+
+.col-phone {
+  white-space: nowrap;
+  min-width: 110px;
+}
+
+.col-actions {
+  white-space: nowrap;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 3px;
+  color: #666;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn:hover {
+  color: #d32f2f;
+  background-color: #fdecea;
+}
+
+.edit-btn:hover {
+  color: #1a73e8;
+  background-color: #e8f0fe;
+}
+
+.empty-row {
+  text-align: center;
+  color: #999;
+  padding: 32px 12px;
+  font-style: italic;
+}
