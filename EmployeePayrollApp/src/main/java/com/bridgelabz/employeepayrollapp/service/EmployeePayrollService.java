@@ -49,22 +49,34 @@ public class EmployeePayrollService implements IEmployeePayrollService {
         long newId = idCounter.getAndIncrement();
         EmployeePayrollData newEmployee = new EmployeePayrollData(
                 newId,
-                employeePayrollDTO.name,
-                employeePayrollDTO.salary
+                employeePayrollDTO.fullName,
+                employeePayrollDTO.address,
+                employeePayrollDTO.city,
+                employeePayrollDTO.state,
+                employeePayrollDTO.zipCode,
+                employeePayrollDTO.phoneNumber
         );
         employeePayrollList.add(newEmployee);
         return newEmployee;
     }
 
     /**
-     * UPDATE employee payroll data in local list (updates first match by name)
+     * UPDATE employee payroll data in local list (updates by ID)
      */
     @Override
-    public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-        if (!employeePayrollList.isEmpty()) {
-            EmployeePayrollData employee = employeePayrollList.get(0);
-            employee.name = employeePayrollDTO.name;
-            employee.salary = employeePayrollDTO.salary;
+    public EmployeePayrollData updateEmployeePayrollData(long id, EmployeePayrollDTO employeePayrollDTO) {
+        EmployeePayrollData employee = employeePayrollList.stream()
+                .filter(emp -> emp.id == id)
+                .findFirst()
+                .orElse(null);
+        
+        if (employee != null) {
+            employee.fullName = employeePayrollDTO.fullName;
+            employee.address = employeePayrollDTO.address;
+            employee.city = employeePayrollDTO.city;
+            employee.state = employeePayrollDTO.state;
+            employee.zipCode = employeePayrollDTO.zipCode;
+            employee.phoneNumber = employeePayrollDTO.phoneNumber;
             return employee;
         }
         return null;

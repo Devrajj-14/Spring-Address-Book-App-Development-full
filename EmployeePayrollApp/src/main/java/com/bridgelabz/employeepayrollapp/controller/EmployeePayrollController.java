@@ -14,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/employeepayrollservice")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeePayrollController {
 
     @Autowired
@@ -51,12 +52,12 @@ public class EmployeePayrollController {
     /**
      * PUT update employee
      * curl -X PUT -H "Content-Type: application/json"
-     *      -d '{"name":"Lisa","salary":2000}'
-     *      "http://localhost:8080/employeepayrollservice/update" -w "\n"
+     *      -d '{"fullName":"Lisa","address":"123 Main St","city":"Mumbai","state":"Maharashtra","zipCode":"400001","phoneNumber":"1234567890"}'
+     *      "http://localhost:8080/employeepayrollservice/update/1" -w "\n"
      */
-    @PutMapping("/update")
-    public EmployeePayrollData updateEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
-        return employeePayrollService.updateEmployeePayrollData(employeePayrollDTO);
+    @PutMapping("/update/{id}")
+    public EmployeePayrollData updateEmployeePayrollData(@PathVariable long id, @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+        return employeePayrollService.updateEmployeePayrollData(id, employeePayrollDTO);
     }
 
     /**
